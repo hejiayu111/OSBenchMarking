@@ -13,12 +13,11 @@ int main(int argc, char* argv[]) {
     unsigned long long start, end;
     double doubletotal;
     srand(time(NULL));
-    unsigned int stride = 2048;
+    unsigned int stride = 512;
 
     int size = 1;
     unsigned int loops = 1000000;
     int *arrayDirt = (int*)malloc(sizeof(int)* (1 << 27));
-
 
     for(;size < 27;size++) {
         unsigned int arraysize = 1 << size;
@@ -26,20 +25,19 @@ int main(int argc, char* argv[]) {
         int *array = (int*)malloc( sizeof(int) * arraysize);
         // memset(array,'a',arraysize);
         for (int j = 0; j < arraysize;j++){
-            array[j] = (j+ stride) % arraysize;
+            array[j] = (j + stride) % arraysize;
         }
         for (int j =0; j < 1 << 27 ; j++){
             arrayDirt[j] = 1;
         }
-        // unsigned int idx = rand()%arraysize;
-        unsigned int idx = 0;
+        int idx = rand() % arraysize;
         start = rdtsc();
         for(;i < loops;i++) {
             idx = array[idx];
         }
         end = rdtsc();
         
-        doubletotal += (double)(end- start) / loops;  
+        doubletotal = (double)(end- start) / loops;  
         
         free(array);
         

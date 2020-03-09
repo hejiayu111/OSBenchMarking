@@ -8,6 +8,7 @@
 
 #define PORT_NUM 1234
 #define FILE_SIZE 1024 * 1024
+#define ITERATIONS 32 * 1024
 
 int main(int argc, char *argv[]) {
     int sockfd;
@@ -50,31 +51,26 @@ int main(int argc, char *argv[]) {
         //     printf("receive %d\n", m);
         // }
         // free(buffer);
-        // while (1) {
-        //     char buffer[4096];
-        //     int n = read(newsockfd, buffer, 4096);
-        //     if (n == 0) {
-        //         break;
-        //     }
-        //     printf("%d\n", n);
-        // }
-        // send back response
-
-        // buffer for receiving data
-        char buffer[FILE_SIZE];
-
-        int n = read(newsockfd, buffer, FILE_SIZE);
-        if (n < 0) {
-            printf("ERROR WHILE READING");
-            return -1;
+        char buffer[1024];
+        int loop = 0;
+        while (1) {
+            bzero(buffer, 1024);
+            int n = read(newsockfd, buffer, 1024);
+            if (n == 0) {
+                break;
+            }
+            loop += 1;
+            if (loop >= ITERATIONS) {
+                break;
+            }
+            printf("%d\n", loop);
         }
         char text[4] = "OK";
-        n = write(newsockfd, text, strlen(text));
+        int n = write(newsockfd, text, strlen(text));
         if (n < 0) {
             printf("ERROR WHILE SENDING BACK TO CLIENT");
             return -1;
         }
-        close(newsockfd);
     }
     close(sockfd);
     return 0;

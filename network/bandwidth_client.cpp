@@ -12,6 +12,7 @@
 #define HOST "192.168.1.6"
 #define PORT_NUM 1234
 #define FILE_SIZE 1024 * 1024
+#define ITERATIONS 32 * 1024
 
 int main(int argc, char *argv[]) {
     int sockfd;
@@ -41,37 +42,34 @@ int main(int argc, char *argv[]) {
     }
 
     //Send
-    // char *sendbuffer = NULL;
-    // sendbuffer = static_cast<char*>(malloc(FILE_SIZE));
-    char sendbuffer[FILE_SIZE];
-    for (int i = 0 ; i < FILE_SIZE; i++) {
-        sendbuffer[i] = 'a';
-    }
+    //FILE *fp = fopen("enwik8", "r");
 
     //Clock start
     clock_gettime(CLOCK_REALTIME,&start_time);
-    int n = write(sockfd, sendbuffer, strlen(sendbuffer));
-    if (n < 0) {
+    char sendbuffer[1024];  //buffer
+    for (int i = 0; i < 1024; i++) {
+        sendbuffer[i] = 'a';
+    }
+    int iter = 0;
+    while (iter < ITERATIONS) {
+        int x = write(sockfd, sendbuffer, strlen(sendbuffer));
+        if (x < 0) {
          printf("ERROR WHILE SENDING TO SERVER");
          return -1;
+        }
+        iter += 1;
     }
-    //int m = sendall(sockfd, sendbuffer, &len);
-    // int len = strlen(sendbuffer);
-    // char *p = sendbuffer;
-    // int m;
-    // while (len > 0 && (m = send(sockfd, p, len, 0)) > 0 ) {
-    //     p += m;
-    //     len -= m;
-    // }
-    // free(sendbuffer);
 
-    n = read(sockfd, buffer, 4);
+    //Clock end
+    clock_gettime(CLOCK_REALTIME, &end_time);
+
+    //printf("sended\n");
+
+    int n = read(sockfd, buffer, 4);
     if (n < 0) {
         printf("ERROR WHILE READING");
         return -1;
     }
-    //Receiving succeeded, clock end
-    clock_gettime(CLOCK_REALTIME, &end_time);
 
     double time_sec = (end_time.tv_sec * 1e9 - start_time.tv_sec * 1e9);
     double time_nsec = (end_time.tv_nsec - start_time.tv_nsec);
@@ -79,7 +77,7 @@ int main(int argc, char *argv[]) {
 
     printf("Total time is: %f\n", time_total);
     printf("%s\n",buffer);
-    sleep(4);
+    sleep(1);
     close(sockfd);
     return 0;
 }

@@ -11,6 +11,7 @@
 #include <iostream>
 
 #define HOST "100.80.241.207"
+
 #define PORT_NUM 1234
 
 int main(int argc, char *argv[]) {

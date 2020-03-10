@@ -5,8 +5,11 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <iostream>
 
 #define PORT_NUM 1234
+
+// using namespace std;
 
 int main(int argc, char *argv[]) {
     int sockfd;
@@ -39,15 +42,17 @@ int main(int argc, char *argv[]) {
         }
 
         // buffer for receiving data
-        char buffer[16];
+        char buffer[64];
 
-        int n = read(newsockfd, buffer, 16);
+        int n = read(newsockfd, buffer, 64);
         if (n < 0) {
             printf("ERROR WHILE READING");
             return -1;
         }
+
+        std::cout << buffer << std::endl;
         // send back response
-        char text[4] = "OK";
+        char text[4] = "OK\n";
         n = write(newsockfd, text, strlen(text));
         if (n < 0) {
             printf("ERROR WHILE SENDING BACK TO CLIENT");

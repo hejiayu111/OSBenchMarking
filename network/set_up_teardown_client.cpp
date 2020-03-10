@@ -9,12 +9,13 @@
 #include <netdb.h>
 #include <time.h>
 
-#define HOST "100.80.241.70"
-#define PORT_NUM 5678
-#define LOOPS 100
+#define HOST "127.0.0.1"
+#define PORT_NUM 8080
+#define LOOPS 10
 
 int main(int argc, char *argv[]) {
     double ave_time = 0.0;
+    double ave_set_time = 0.0;
     for (int i = 0; i < LOOPS; i++) {
         int sockfd;
         struct sockaddr_in servAddr;
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]) {
             printf("ERROR WHEN WE TRY TO CREATE A SOCKET");
             return -1;
         }
+
         // Configuration
         servAddr.sin_family = AF_INET;
         if(inet_pton(AF_INET, HOSTNAME, &servAddr.sin_addr)<=0)
@@ -37,10 +39,18 @@ int main(int argc, char *argv[]) {
             return -1;
         }
         servAddr.sin_port = htons(PORT);
+        clock_gettime(CLOCK_REALTIME,&start_time);
+
         if (connect(sockfd,(struct sockaddr *) &servAddr, sizeof(servAddr)) < 0) {
             printf("ERROR WHILE CONNECTING");
             return -1;
         }
+        clock_gettime(CLOCK_REALTIME, &end_time);
+
+        double set_time_sec = (end_time.tv_sec * 1e9 - start_time.tv_sec * 1e9);
+        double set_time_nsec = (end_time.tv_nsec - start_time.tv_nsec);
+        double set_time_total = 1.0 * (set_time_nsec + set_time_sec) / (1e6 * LOOPS);
+        ave_set_time += set_time_total;
 
         // Send
         char sendbuffer[16] = "CSE221PROJECT\r\n";
@@ -70,6 +80,7 @@ int main(int argc, char *argv[]) {
         ave_time += time_total;
     }
 
-    printf("Total setup time is: %f\n", ave_time);
+    printf("Total tear down time is: %f\n", ave_time);
+    printf("Total setup time is %f\n", ave_set_time);
     return 0;
 }

@@ -10,9 +10,9 @@
 #include <time.h>
 #include <iostream>
 
-#define HOST "100.80.241.207"
+#define HOST "127.0.0.1"
 
-#define PORT_NUM 1234
+#define PORT_NUM 8080
 
 int main(int argc, char *argv[]) {
     int sockfd;

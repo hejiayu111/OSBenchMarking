@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#define PORT_NUM 5678
+#define PORT_NUM 8080
 
 int main(int argc, char *argv[]) {
     int sockfd;

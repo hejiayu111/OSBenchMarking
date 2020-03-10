@@ -7,7 +7,7 @@
 #include <netinet/in.h>
 #include <iostream>
 
-#define PORT_NUM 1234
+#define PORT_NUM 8080
 
 // using namespace std;
 

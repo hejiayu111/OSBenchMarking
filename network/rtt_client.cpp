@@ -9,7 +9,7 @@
 #include <netdb.h>
 #include <time.h>
 
-#define HOST "192.168.1.6"
+#define HOST "100.64.0.152"
 #define PORT_NUM 1234
 
 int main(int argc, char *argv[]) {

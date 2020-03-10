@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <iostream>
 
 #define PORT_NUM 1234
 #define FILE_SIZE 1024 * 1024
@@ -33,6 +34,8 @@ int main(int argc, char *argv[]) {
     }
     listen(sockfd, 1);
 
+    int loop = 0;
+
     while(1) {
         int newsockfd = accept(sockfd, (struct sockaddr *) &cliAddr, &clilen);
         if (newsockfd < 0) {
@@ -52,8 +55,7 @@ int main(int argc, char *argv[]) {
         // }
         // free(buffer);
         char buffer[1024];
-        int loop = 0;
-        while (1) {
+        while (loop < ITERATIONS) {
             bzero(buffer, 1024);
             int n = read(newsockfd, buffer, 1024);
             if (n == 0) {
@@ -63,14 +65,17 @@ int main(int argc, char *argv[]) {
             if (loop >= ITERATIONS) {
                 break;
             }
-            printf("%d\n", loop);
+            std::cout << loop << std::endl;
+            //printf("%d\n", loop);
         }
-        char text[4] = "OK";
+        std::cout << "loop ended" << std::endl;
+        char text[4] = "OK\n";
         int n = write(newsockfd, text, strlen(text));
         if (n < 0) {
             printf("ERROR WHILE SENDING BACK TO CLIENT");
             return -1;
         }
+        std::cout << text << std::endl;
     }
     close(sockfd);
     return 0;

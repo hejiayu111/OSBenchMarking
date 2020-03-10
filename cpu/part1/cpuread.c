@@ -2,25 +2,18 @@
 #include <stdlib.h>
 #include "rdtsc.h"
 
+#define ITERATIONS 1000
+
 int main(int argc, char* argv[]) {
-	
-	if(argc < 2) {
-		printf("usage : ./program 1000000\n");
-		exit(0);
-	}
-
-	int loops = atoi(argv[1]);
-
-	unsigned long long total = 0;
     unsigned long long start, end;
-
-	int i = 0;
+	double res = 0.0;
+    int i;
     
-	for (; i < loops; i++) {
+	for (i = 0; i < ITERATIONS; i++) {
 		start = rdtsc();
 		end = rdtsc();
-		total += (end - start);
+		res += 1.0 * (end - start) / ITERATIONS;
 	}
 
-	printf("CPU reading rdtsc average time :%llu  %f\n", total, total*1.0/loops);
+	printf("Time Register Average Reading Time: %f\n", res);
 }

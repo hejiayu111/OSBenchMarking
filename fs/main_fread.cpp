@@ -5,5 +5,5 @@ int main(){
     // my_file.file_create();
     // my_file.measure_cache();
     my_file.fread_seq();
-    // my_file.fread_rand();
+    my_file.fread_rand();
 }

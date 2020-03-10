@@ -11,6 +11,7 @@ void MyFile::measure_cache(){
     double time_sec = 0; 
     double time_nsec = 0; 
 
+    std::cout << "===========================measuring cache================" << std::endl;
     for (int i = 0; i < FILES_NUM; i++){
         sprintf(file_name_buffer, "./big_file_%d.txt", i);
         int f = open(file_name_buffer, O_RDONLY | O_SYNC);
@@ -36,7 +37,8 @@ void MyFile::measure_cache(){
             time_total += time_sec + time_nsec;
         }
         close(f);
-        std::cout << file_name_buffer << " " << "read time is " <<(double)time_total/block_num << std::endl;
+        std::cout << sizes_string[i] << " " << "read time is " <<(double)time_total/block_num << std::endl;
     }
     free(buffer);
+    std::cout<< "===================cache measurment finished=====================" << std::endl;
 }

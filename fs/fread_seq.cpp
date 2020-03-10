@@ -8,7 +8,8 @@ void MyFile::fread_seq(){
     struct timespec read_start,read_end;
     time_t time_total = 0;
     time_t time_sec = 0; 
-    time_t time_nsec = 0; 
+    time_t time_nsec = 0;
+    std::cout << "====================sequential measurement start========================" << std::endl; 
     for (int i = 0; i < FILES_NUM; i++){
         sprintf(file_name_buffer, "./big_file_%d.txt", i);
         int f = open(file_name_buffer, O_RDONLY | O_SYNC | O_DIRECT);
@@ -25,4 +26,5 @@ void MyFile::fread_seq(){
         std::cout << sizes_string[i] << " " << "sequential read time is " <<(double)time_total/block_num << std::endl;
     }
     free(buffer);
+    std::cout << "=============sequential read measurement finished===================================="<<std::endl;
 }

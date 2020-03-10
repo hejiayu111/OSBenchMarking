@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     unsigned long long start, end;
     double doubletotal;
     srand(time(NULL));
-    unsigned int stride = 512;
+    unsigned int stride = 16384;
 
     int size = 1;
     unsigned int loops = 1000000;

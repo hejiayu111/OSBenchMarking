@@ -4,6 +4,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
+
+#define rdtsc_time 120
+
 int main(int argc, char **argv) {
     
     if(argc < 2) {
@@ -11,7 +14,7 @@ int main(int argc, char **argv) {
         exit(0);
     }
     
-    unsigned long long overhead = 133221;
+    unsigned long lonrdtsc_time = 133221;
     
     int loops = atoi(argv[1]);
     unsigned long long total = 0;
@@ -31,11 +34,13 @@ int main(int argc, char **argv) {
         
         if (pid == 0) {
             exit(-1);
-        } else {
+        } 
+        
+        else {
             wait(NULL);
             end = rdtsc();
             unsigned long long diff = end - start;
-            total += (diff - 2*overhead);
+            total += (diff - rdtsc_time);
         }
     }
 

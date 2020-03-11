@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     unsigned long long start, end;
     double doubletotal;
     srand(time(NULL));
-    unsigned int stride = 128;
+    unsigned int stride = 2048;
 
     int size = 1;
     unsigned int loops = 1000000;
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
         free(array);
         
         
-        printf("array size : %d, RAM access time : %f ns\n", size, doubletotal);
+        printf("array size : %d, stride : %d ,RAM access time : %f ns\n", size, stride,doubletotal);
         
         //sleep(1);
     }

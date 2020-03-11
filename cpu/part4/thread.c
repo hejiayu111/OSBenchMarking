@@ -9,7 +9,9 @@
 #define ITER_TIME 6
 #define LOOP 1000
 
-void *func(void *tid) {pthread_exit(NULL);}
+void *func(void *arg) {
+    pthread_exit(NULL);
+}
 
 int main() {
     unsigned long long total = 0;

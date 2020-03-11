@@ -5,16 +5,9 @@
 #include <pthread.h>
 #include <unistd.h>
 
-void *func(void *tid) {pthread_exit(NULL);}
+#define LOOP 100
 
 int main(int argc, char **argv) {
-    
-    if(argc < 2) {
-        printf("usage : ./program 1000");
-        exit(0);
-    }
-    
-    int loops = atoi(argv[1]);
     unsigned long long total = 0;
     
     int i = 0;

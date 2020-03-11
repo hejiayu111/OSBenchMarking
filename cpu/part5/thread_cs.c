@@ -3,49 +3,40 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <rdtsc.h>
+#include "rdtsc.h"
 #include <pthread.h>
+#include <sched.h>
 
-int pipefd[2];
+#define LOOP 100
+#define _GNU_SOURCE
+#define rdtsc_time 120
 
-void *func(void *tid) {
-    unsigned long long end;
-    end = rdtsc();
-    write(pipefd[1], &end, sizeof(end));
+int p[2];
+
+void *func(void *arg) {
+    unsigned long long end = rdtsc();
+    write(p[1], &end, sizeof(end));
     pthread_exit(NULL);
 }
 
-int
-main(int argc, char * argv[])
-{
-    if(argc < 2) {
-        printf("usage : ./program 100");
-        exit(0);
-    }
-    
-    int loops = atoi(argv[1]);
-    
-    int i = 0;
+int main() {
     unsigned long long total = 0;
+    unsigned long long start, end;
+    int i = 0;
+    pipe(p);
+    pthread_t p_thread;
+    int valid_loop = 0;
     
-    pipe(pipefd);
-    
-    for(;i < loops;i++) {
-        
-        long l;
-        pthread_t thread;
-        pthread_create(&thread, NULL, func, (void *)l);
-        
-        unsigned long long start, end, diff;
+    for(; i < LOOP; i++) {
+        pthread_create(&p_thread, NULL, func, NULL);
         start = rdtsc();
-        read(pipefd[0], &end, sizeof(end));
-        diff = end - start;
-        total += diff;
-        
-        pthread_join(thread, NULL);
+        sched_yield();
+        read(p[0], &end, sizeof(end));
+        total += (end - start - rdtsc_time);
+        valid_loop += 1;
+        pthread_join(p_thread, NULL);
     }
     
-    
-    printf("thread context switch : %llu cycles; Total : %llu \n", total/loops, total);
+    printf("thread context switch time: %f cycles\n", 1.0 * total / LOOP);
     return 0;
 }

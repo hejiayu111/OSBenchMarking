@@ -40,11 +40,7 @@ int main(int argc, char* argv[]) {
         doubletotal = (double)(end- start) / loops;  
         
         free(array);
-        
-        
         printf("array size : %d, RAM access cycle : %f\n", size, doubletotal);
-        
-        //sleep(1);
     }
     
     

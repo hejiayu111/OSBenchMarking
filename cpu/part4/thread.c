@@ -5,35 +5,25 @@
 #include <pthread.h>
 #include <unistd.h>
 
+#define RDTSC_TIME 120
+#define ITER_TIME 6
+#define LOOP 1000
+
 void *func(void *tid) {pthread_exit(NULL);}
 
-int main(int argc, char **argv) {
-    
-    if(argc < 2) {
-        printf("usage : ./program 1000");
-        exit(0);
-    }
-    
-    int loops = atoi(argv[1]);
+int main() {
     unsigned long long total = 0;
-    
     int i = 0;
-
-    for (; i < loops; i++) {
-        unsigned long long start, end;
-        
-        long p;
+    unsigned long long start, end;
+    for (; i < LOOP; i++) {        
         pthread_t thread;
         start = rdtsc();
-        pthread_create(&thread, NULL, func, (void *)p);
+        pthread_create(&thread, NULL, func, NULL);
         end = rdtsc();
-        total += (end - start);
-        
+        total += (end - start - RDTSC_TIME - ITER_TIME);
         pthread_join(thread, NULL);
     }
-
-
-    printf("pthread task creation : %llu cycles; Total : %llu \n", total/loops, total);
+    printf("pthread creation time is : %f cycles; Total : %llu \n", total*1.0/LOOP, total);
 
     return 0;
 }

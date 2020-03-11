@@ -3,20 +3,18 @@
 #include <time.h>
 #include "rdtsc.h"
 
-int main(int argc, char* argv[]) {
-    
-	if(argc < 2) {
-		printf ("usage : ./program 1000000\n");
-		exit(0);
-	}
+#define LOOP 1000000
+#define rdtsc_time 120
 
-	int loops = atoi(argv[1]);
+int main() {
+
+	int loops = LOOP;
     unsigned long long start, end;
+    int i=0;
     start = rdtsc();
-    int i;
-    for (i = 0; i < loops; ++i) {}
+    for (; i < loops; ++i) {}
     end = rdtsc();
 	unsigned long long total = end - start;
-    printf ("CPU iteration total time and average time: %llu  %f\n", total, total*1.0/loops);
+    printf ("CPU iteration total time and average time: %llu  %f\n", total, (total-rdtsc_time)*1.0/loops);
 }
 

@@ -1,0 +1,1 @@
+gcc -O0 -I../../ cpuread.c -o cpuread.out

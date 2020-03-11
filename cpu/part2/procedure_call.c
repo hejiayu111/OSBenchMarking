@@ -32,7 +32,7 @@ void measure1() {
     int i = 0;
     unsigned long long total = 0;
     unsigned long long start, end;
-    volatile int a;
+    int a;
     start = rdtsc();
     for(;i < LOOP;++i) {
         function1(a);
@@ -46,7 +46,7 @@ void measure2() {
     int i = 0;
     unsigned long long total = 0;
     unsigned long long start, end;
-    volatile int a,b;
+    int a,b;
     start = rdtsc();
     for(;i < LOOP;++i) {
         function2(a,b);
@@ -60,7 +60,7 @@ void measure3() {
     int i = 0;
     unsigned long long total = 0;
     unsigned long long start, end;
-    volatile int a,b,c;
+    int a,b,c;
         start = rdtsc();
     for(;i < LOOP;++i) {
         function3(a,b,c);
@@ -74,7 +74,7 @@ void measure4() {
     int i = 0;
     unsigned long long total = 0;
     unsigned long long start, end;
-    volatile int a,b,c,d;
+    int a,b,c,d;
     start = rdtsc();
     for(;i < LOOP;++i) {
         function4(a,b,c,d);
@@ -88,7 +88,7 @@ void measure5() {
     int i = 0;
     unsigned long long total = 0;
     unsigned long long start, end;
-    volatile int a,b,c,d,e;
+    int a,b,c,d,e;
         start = rdtsc();
     for(;i < LOOP;++i) {
         function5(a,b,c,d,e);
@@ -102,7 +102,7 @@ void measure6() {
     int i = 0;
     unsigned long long total = 0;
     unsigned long long start, end;
-    volatile int a,b,c,d,e,f;
+    int a,b,c,d,e,f;
     start = rdtsc();
     for(;i < LOOP;++i) {
         function6(a,b,c,d,e,f);
@@ -117,7 +117,7 @@ void measure7() {
     int i = 0;
     unsigned long long total = 0;
     unsigned long long start, end;
-    volatile int a,b,c,d,e,f,g;
+    int a,b,c,d,e,f,g;
     start = rdtsc();
     for(;i < LOOP;++i) {
         function7(a,b,c,d,e,f,g);

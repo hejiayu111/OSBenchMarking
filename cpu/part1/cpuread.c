@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "rdtsc.h"
 
-#define ITERATIONS 1000
+#define ITERATIONS 100000
 
 int main(int argc, char* argv[]) {
     unsigned long long start, end;

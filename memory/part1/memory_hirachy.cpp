@@ -9,15 +9,22 @@
 
 int main(int argc, char* argv[]) {
 
+    struct timespec read_start,read_end;
 
     unsigned long long start, end;
     double doubletotal;
     srand(time(NULL));
-    unsigned int stride = 16384;
+    unsigned int stride = 128;
 
     int size = 1;
     unsigned int loops = 1000000;
     int *arrayDirt = (int*)malloc(sizeof(int)* (1 << 27));
+
+    double clock_overhead;
+    clock_gettime(CLOCK_REALTIME, &read_start);
+    clock_gettime(CLOCK_REALTIME, &read_end);
+    clock_overhead = (read_end.tv_sec - read_start.tv_sec)*1e9;
+    clock_overhead += (read_end.tv_nsec - read_start.tv_nsec);
 
     for(;size < 27;size++) {
         unsigned int arraysize = 1 << size;
@@ -31,18 +38,21 @@ int main(int argc, char* argv[]) {
             arrayDirt[j] = 1;
         }
         int idx = rand() % arraysize;
-        start = rdtsc();
+        clock_gettime(CLOCK_REALTIME, &read_start);
         for(;i < loops;i++) {
             idx = array[idx];
         }
-        end = rdtsc();
+        clock_gettime(CLOCK_REALTIME, &read_end);
         
-        doubletotal = (double)(end- start) / loops;  
+        doubletotal += (read_end.tv_sec - read_start.tv_sec)*1e9;
+        doubletotal += (read_end.tv_nsec - read_start.tv_nsec);
+
+        doubletotal = (doubletotal-clock_overhead) / loops;  
         
         free(array);
         
         
-        printf("array size : %d, RAM access cycle : %f\n", size, doubletotal);
+        printf("array size : %d, RAM access time : %f ns\n", size, doubletotal);
         
         //sleep(1);
     }

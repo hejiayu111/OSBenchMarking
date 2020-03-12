@@ -2,7 +2,6 @@
 #include "stdlib.h"
 #include "stdio.h"
 
-#pragma OPTIMIZE OFF
 #define LOOP 1000000
 
 void function0() {}
@@ -20,7 +19,7 @@ void meaure0() {
     unsigned long long total = 0;
     unsigned long long start, end;
     start = rdtsc();
-    for(;i < LOOP;++i) {
+    for(; i < LOOP; i++) {
         function0();
     }
     end = rdtsc();
@@ -34,7 +33,7 @@ void measure1() {
     unsigned long long start, end;
     int a;
     start = rdtsc();
-    for(;i < LOOP;++i) {
+    for(; i < LOOP; i++) {
         function1(a);
     }
     end = rdtsc();
@@ -48,7 +47,7 @@ void measure2() {
     unsigned long long start, end;
     int a,b;
     start = rdtsc();
-    for(;i < LOOP;++i) {
+    for(; i < LOOP; i++) {
         function2(a,b);
     }
     end = rdtsc();
@@ -61,8 +60,8 @@ void measure3() {
     unsigned long long total = 0;
     unsigned long long start, end;
     int a,b,c;
-        start = rdtsc();
-    for(;i < LOOP;++i) {
+    start = rdtsc();
+    for(; i < LOOP; i++) {
         function3(a,b,c);
     }
     end = rdtsc();
@@ -76,7 +75,7 @@ void measure4() {
     unsigned long long start, end;
     int a,b,c,d;
     start = rdtsc();
-    for(;i < LOOP;++i) {
+    for(; i < LOOP; i++) {
         function4(a,b,c,d);
     }
     end = rdtsc();
@@ -89,8 +88,8 @@ void measure5() {
     unsigned long long total = 0;
     unsigned long long start, end;
     int a,b,c,d,e;
-        start = rdtsc();
-    for(;i < LOOP;++i) {
+    start = rdtsc();
+    for(; i < LOOP; i++) {
         function5(a,b,c,d,e);
     }
     end = rdtsc();
@@ -104,7 +103,7 @@ void measure6() {
     unsigned long long start, end;
     int a,b,c,d,e,f;
     start = rdtsc();
-    for(;i < LOOP;++i) {
+    for(; i < LOOP; i++) {
         function6(a,b,c,d,e,f);
     }
     end = rdtsc();
@@ -119,7 +118,7 @@ void measure7() {
     unsigned long long start, end;
     int a,b,c,d,e,f,g;
     start = rdtsc();
-    for(;i < LOOP;++i) {
+    for(; i < LOOP; i++) {
         function7(a,b,c,d,e,f,g);
     }
     end = rdtsc();
@@ -128,8 +127,6 @@ void measure7() {
 }
     
 int main() {
-    
-    
     meaure0();
     measure1();
     measure2();

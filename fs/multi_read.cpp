@@ -1,10 +1,11 @@
 #include "MyFile.hpp"
+#include "rdtsc.h"
 #include <stdlib.h>
 
 void MyFile::readFile(int i){
 	char file_name_buffer[20];
 	unsigned long sum = 0;
-	void* buffer = malloc(BLOCK);
+	void* buffer = malloc(FILE_BLOCK);
 	sprintf(file_name_buffer, "./big_file_%d.txt", i);
 	int fd = open(file_name_buffer, O_RDONLY | O_SYNC);
 	
@@ -12,9 +13,9 @@ void MyFile::readFile(int i){
 	int count = 0;
 	while(true)
 	{
-		start = rdtsc_begin();
-		ssize_t bytes = read(fd, buffer, BLOCK);
-		end = rdtsc_end();
+		start = rdtsc();
+		ssize_t bytes = read(fd, buffer, FILE_BLOCK);
+		end = rdtsc();
 		if(bytes <= 0)
 			break;
 		sum += (end - start);

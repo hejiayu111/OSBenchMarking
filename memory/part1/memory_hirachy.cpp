@@ -51,9 +51,6 @@ int main(int argc, char* argv[]) {
         free(array);
         printf("array size : %d, stride : %d ,RAM access time : %f ns\n", size, stride,doubletotal);
     }
-    
-    
-    
     return 0;
     
 }

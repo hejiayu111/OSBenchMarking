@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string>
-
+#include "rdtsc.h"
 #ifndef MY_FILE_HPP
 #define MY_FILE_HPP
 
@@ -28,6 +28,8 @@ class MyFile{
         void fread_seq();
         void fread_rand();
         void file_create();
+        void readFile(int i);
+        void file_multi_read();
 };
 
 

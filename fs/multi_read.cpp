@@ -15,7 +15,7 @@ void MyFile::file_multi_read(){
 			MyFile::fread_rand();
 			cout << "\nCurrent Process's number is : " 
              << getpid() << endl;
-			exit(0);
+			return 0;
 		}
 	}
 }

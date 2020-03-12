@@ -48,13 +48,8 @@ int main(int argc, char* argv[]) {
         doubletotal += (read_end.tv_nsec - read_start.tv_nsec);
 
         doubletotal = (doubletotal-clock_overhead) / loops;  
-        
         free(array);
-        
-        
         printf("array size : %d, stride : %d ,RAM access time : %f ns\n", size, stride,doubletotal);
-        
-        //sleep(1);
     }
     
     

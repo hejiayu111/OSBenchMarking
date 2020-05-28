@@ -8,7 +8,7 @@
 
 int main() {
 
-	int loops = LOOP;
+    int loops = LOOP;
     unsigned long long start, end;
     int i=0;
     start = rdtsc();
